@@ -1,0 +1,21 @@
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f0c29"></stop>
+      <stop offset="50%" stop-color="#302b63"></stop>
+      <stop offset="100%" stop-color="#24243e"></stop>
+    </linearGradient>
+
+    <!-- Stripe Pattern -->
+    <pattern id="diagonal-stripes" patternUnits="userSpaceOnUse" width="40" height="40" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="40" stroke="#ffffff10" stroke-width="10"></line>
+    </pattern>
+  </defs>
+
+  <!-- Apply Gradient -->
+  <rect width="100%" height="100%" fill="url(#bg-gradient)"></rect>
+
+  <!-- Apply Stripes -->
+  <rect width="100%" height="100%" fill="url(#diagonal-stripes)"></rect>
+</svg>
