@@ -1,5 +1,10 @@
 import { FaSearch } from 'react-icons/fa'
-export const Search = ({search, setSearch})=>{
+type SearchProps = {
+    search: string;
+    setSearch: (value: string) => void;
+};
+
+export const Search = ({search, setSearch}: SearchProps) => {
     return (
         <>
         <div className='search'>

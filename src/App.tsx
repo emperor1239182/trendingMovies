@@ -1,34 +1,71 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { Search } from './search';
+import { Button } from './button'; 
+import { Moviecard } from './moviecard';
 
 function App() {
-  const [movies, setMovies] = useState([]);
+
   const [search, setSearch] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(Number);
+  const [isLoading, setIsLoading] = useState(false);
 
-  type options = {
-    title: string
-    date: number
-    plot: string
-    type: string
+
+   const apiKey = import.meta.env.VITE_MOVIES_API_KEY
+   const apiBaseUrl = 'https://api.themoviedb.org/3';
+
+  type param = {
+    method: string;
+    headers: HeadersInit;
   }
 
-  const parameters : options = {
-    title: 'je',
-    date: 45,
-    plot: 'hello',
-    type: 'werr'
+  const options : param = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${apiKey}`
+  }
+};
+
+  const getMovies = async () => {
+    setIsLoading((prev)=> !prev);
+
+    try{
+      const endPoint = `${apiBaseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`
+
+      const response = await fetch(endPoint, options);
+
+      if(!response){
+        throw new Error('failed to load movies')
+      }
+
+      const data = await response.json();
+
+      if(data.response == 'false'){
+        setErrorMessage(data.Error || 'failed to fetch movies')
+        setMovies([]);
+      }
+
+      console.log(data);
+      setMovies(data.results);
+      setTotalPages(data.total_pages);
+
+
+    } catch (error){
+      console.log(`error fetching movies: ${error}`);
+      setErrorMessage('error fetching movies. Please try agian');
+    } finally{
+      setIsLoading(false);
+    }
   }
 
-  const apiKey = import.meta.env.VITE_STREAMING_API_KEY;
-
-  const getMovies = async()=>{
-    const data = await fetch(url)
-  }
 
   useEffect(()=>{
-
-  })
+    getMovies();
+  }, [page])
   
   return (
     <>
@@ -43,7 +80,12 @@ function App() {
 
   <div>
     <h2>Movie Lists</h2>
-      
+    {isLoading? (<p>Loading....</p>) : 
+    errorMessage? ( <p> {errorMessage}</p>) :
+    <Moviecard movies={movies} />
+    }
+    
+    <Button page={page} setPage={setPage} totalPages={totalPages}/>
   </div>
 
      </div>
