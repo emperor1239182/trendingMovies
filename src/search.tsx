@@ -5,7 +5,6 @@ type SearchProps = {
 };
 
 export const Search = ({search, setSearch}: SearchProps) => {
-     console.log("Search component mounted");
     return (
         <>
         <div className='search'>

@@ -1,21 +1,26 @@
 import { useState, useEffect } from 'react';
+import { useDebounce } from 'react-use';
 import './App.css';
 import { Search } from './search';
 import { Button } from './button'; 
 import { Moviecard } from './moviecard';
 
 function App() {
-  
+
   const [search, setSearch] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [debouncedSearch, setDebouncedSearch] = useState('')
 
 
-   const apiKey = import.meta.env.VITE_MOVIES_API_KEY
-   const apiBaseUrl = 'https://api.themoviedb.org/3';
+  const apiKey = import.meta.env.VITE_MOVIES_API_KEY
+  const apiBaseUrl = 'https://api.themoviedb.org/3';
+
+  //prevent too many requests from the api
+  useDebounce(()=> setDebouncedSearch(search), 1000, [search])
 
   type param = {
     method: string;
@@ -32,7 +37,7 @@ function App() {
 
  const getMovies = async (query: string) => {
   setIsLoading(true);
-  setErrorMessage(''); // clear previous errors
+  setErrorMessage(''); 
 
   try {
     const endPoint = query
@@ -53,6 +58,7 @@ function App() {
     } else {
       setMovies(data.results);
       setTotalPages(data.total_pages);
+      console.log(data)
     }
   } catch (error) {
     console.error(`Error fetching movies: ${error}`);
@@ -65,9 +71,8 @@ function App() {
 
 
   useEffect(()=>{
-    console.log("Running getMovies with:", search);
-    getMovies(search);
-  }, [search, page])
+    getMovies(debouncedSearch);
+  }, [debouncedSearch, page])
   
   return (
     <>
