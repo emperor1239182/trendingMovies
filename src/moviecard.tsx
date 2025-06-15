@@ -1,3 +1,5 @@
+import { GoldenStar } from "./star";
+ 
  type Movie = {
   id : number;
   title : string;
@@ -6,17 +8,14 @@
   vote_average : number;
   original_language : string;
   release_date : string;
-
-
-  // add other fields as needed
 };
 
 type MoviecardProps = {
   movies: Movie[];
 };
 
-
 export const Moviecard = ({ movies }: MoviecardProps) => {
+
   return (
     <div className="movie-list">
 
@@ -38,7 +37,7 @@ export const Moviecard = ({ movies }: MoviecardProps) => {
 
               <div className="rating">
             <p>{movie.vote_average? movie.vote_average.toFixed(1) : 'N/A'}</p>
-
+            <GoldenStar/>
             </div>
 
             <span>.</span>
