@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
 import { Search } from './search';
 import { Button } from './button'; 
 import { Moviecard } from './moviecard';
 
 function App() {
-
+  
   const [search, setSearch] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(Number);
+  const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -30,42 +30,44 @@ function App() {
   }
 };
 
-  const getMovies = async () => {
-    setIsLoading((prev)=> !prev);
+ const getMovies = async (query: string) => {
+  setIsLoading(true);
+  setErrorMessage(''); // clear previous errors
 
-    try{
-      const endPoint = `${apiBaseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`
+  try {
+    const endPoint = query
+      ? `${apiBaseUrl}/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${page}&include_adult=false`
+      : `${apiBaseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
 
-      const response = await fetch(endPoint, options);
+    const response = await fetch(endPoint, options);
 
-      if(!response){
-        throw new Error('failed to load movies')
-      }
+    if (!response.ok) {
+      throw new Error('Failed to load movies');
+    }
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if(data.response == 'false'){
-        setErrorMessage(data.Error || 'failed to fetch movies')
-        setMovies([]);
-      }
-
-      console.log(data);
+    if (!data.results || data.results.length === 0) {
+      setErrorMessage('No movies found');
+      setMovies([]);
+    } else {
       setMovies(data.results);
       setTotalPages(data.total_pages);
-
-
-    } catch (error){
-      console.log(`error fetching movies: ${error}`);
-      setErrorMessage('error fetching movies. Please try agian');
-    } finally{
-      setIsLoading(false);
     }
+  } catch (error) {
+    console.error(`Error fetching movies: ${error}`);
+    setErrorMessage('Error fetching movies. Please try again.');
+  } finally {
+    setIsLoading(false);
   }
+};
+
 
 
   useEffect(()=>{
-    getMovies();
-  }, [page])
+    console.log("Running getMovies with:", search);
+    getMovies(search);
+  }, [search, page])
   
   return (
     <>
