@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+*{
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background-image: url('/public/backgroundTheme.svg');
@@ -13,22 +17,37 @@ body {
 
 @layer components {
   .header{
-    @apply flex flex-col justify-center items-center mx-auto my-10
+    @apply flex flex-col justify-center items-center mx-20 my-30
   }
   .search{
     @apply flex justify-center items-center flex-row-reverse bg-blue-950 p-4 gap-3 rounded-4xl
+  }
+  .navBar{
+  @apply hidden md:flex justify-center items-center gap-8 
+}
+.topBar{
+    @apply flex justify-between fixed top-0 z-10 w-full bg-cyan-950 p-2
   }
 }
 
 
 @layer base{
-  h1{
-  @apply font-extrabold text-4xl text-pink-300
+  .intro{
+  @apply text-[30px] text-center text-pink-300
   }
   input{
-  @apply border-none focus:outline-none w-3xl text-amber-100
+  @apply border-none focus:outline-none w-60 md:w-2xl lg:w-4xl text-amber-100
 }
-span{
-  @apply bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold
+.tag{
+  @apply bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent font-extrabold
+}
+ul > li{
+  @apply text-white text-[20px] font-extralight
+}
+.logo{
+ @apply bg-cyan-600 inline-block w-[50px] h-[4px] md:w-20 rounded-2xl p-3 align-middle
+}
+.movieList{
+  
 }
 }

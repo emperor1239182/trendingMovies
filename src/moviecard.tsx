@@ -18,6 +18,7 @@ export const Moviecard = ({ movies }: MoviecardProps) => {
 
   return (
     <div className="movie-list">
+      <h2 className='text-[#ffffffa7] font-extrabold text-4xl '>Movie Lists</h2>
 
       <ul>
         {movies.map((movie) => (

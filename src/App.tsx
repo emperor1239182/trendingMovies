@@ -78,15 +78,26 @@ function App() {
     <>
       <div>
 
+        <section className='topBar'>
+          <h1 className='tag text-[1.2rem] md:text-3xl'>Movie Drum <span className='logo'></span></h1>
+          
+          <nav>
+            <ul className='navBar'>
+              <li>Movies</li>
+              <li>TV Shows</li>
+              <li>People</li>
+            </ul>
+          </nav>
+        </section>
+
         <header className='header'>
-          <img src='/public/banner2.png' alt='banner' className='w-[500px] h-auto object-cover rounded border-none' />
-        <h1>Discover New <span>Movies</span> You Love Without The Hassle</h1>
+          <img src='/public/banner2.png' alt='banner' className="w-full h-[60vh]" />
+        <h1 className='intro'>Discover New <span className='tag'>Movies</span> You Love Without The Hassle</h1>
 
         <Search search={search} setSearch={setSearch}/>
   </header>
 
   <div>
-    <h2>Movie Lists</h2>
     {isLoading? (<p>Loading....</p>) : 
     errorMessage? ( <p> {errorMessage}</p>) :
     <Moviecard movies={movies} />
