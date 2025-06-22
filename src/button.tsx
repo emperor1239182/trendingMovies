@@ -15,7 +15,7 @@ export const Button = ({ setPage, totalPages, page }: ButtonProps) => {
           Prev
         </button>
 
-        <span>Page {page} of {totalPages}</span>
+        <span className="text-[12px] md:text-[18px] text-white">Page {page} of {totalPages}</span>
 
         <button
           onClick={() => setPage((prev: number) => Math.min(prev + 1, totalPages))}

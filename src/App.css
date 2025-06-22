@@ -28,6 +28,12 @@ body {
 .topBar{
     @apply flex justify-between fixed top-0 z-10 w-full bg-cyan-950 p-2
   }
+  .movie-card{
+    @apply w-[120px] border-2 h-70 flex flex-col  p-4 rounded-2xl bg-black
+  }
+  .pagination{
+    @apply flex justify-center items-center md:justify-around mt-10
+  }
 }
 
 
@@ -47,7 +53,12 @@ ul > li{
 .logo{
  @apply bg-cyan-600 inline-block w-[50px] h-[4px] md:w-20 rounded-2xl p-3 align-middle
 }
-.movieList{
-  
+.movie-list{
+  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+}
+button{
+  @apply rounded-3xl w-[90px] text-center bg-blue-300 cursor-pointer mt-3 p-2
 }
 }
+
+
