@@ -32,9 +32,6 @@ body {
   .search{
     @apply flex justify-center items-center flex-row-reverse bg-blue-950 p-4 gap-3 rounded-4xl
   }
-  .navBar{
-  @apply  block 
-}
 .topBar{
     @apply flex justify-between fixed top-0 left-0 z-10 w-full bg-cyan-950 p-2
   }
@@ -57,7 +54,7 @@ body {
 .tag{
   @apply bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent font-extrabold
 }
-ul > li{
+.movie-list > li{
   @apply text-white text-[20px] font-extralight cursor-pointer
 }
 .logo{
@@ -69,6 +66,13 @@ ul > li{
 button{
   @apply rounded-3xl w-[90px] text-center bg-blue-300 cursor-pointer mt-3 p-2
 }
+.modal{
+  @apply hidden md:flex justify-center items-center gap-8 
+}
+.sideBar{
+    @apply rounded-l fixed top-0 right-0 h-40 w-50 bg-white shadow-xl p-3
+  }
+  
 }
 
 

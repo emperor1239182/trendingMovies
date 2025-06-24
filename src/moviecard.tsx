@@ -17,7 +17,7 @@ type MoviecardProps = {
   topicQuery: string;
 };
 
-export const Moviecard = ({ movies, topicQuery }: MoviecardProps) => {
+export const Moviecard = ({ movies, topicQuery}: MoviecardProps) => {
 
   return (
     <div className="movie-container">
