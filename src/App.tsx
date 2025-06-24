@@ -5,6 +5,10 @@ import { FaBars,  FaTimes} from 'react-icons/fa';
 import { Search } from './search';
 import { Button } from './button'; 
 import { Moviecard } from './moviecard';
+import type { MovieDetails } from './types'; 
+import { MovieModal } from './movieDetails';
+
+
 
 
 function App() {
@@ -18,6 +22,8 @@ function App() {
   const [debouncedSearch, setDebouncedSearch] = useState('')
   const [isModal, setIsModal] = useState(false);
   const [topicQuery, setTopicQuery] = useState('');
+  const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
+const [showModal, setShowModal] = useState(false);
 
 
 
@@ -30,6 +36,7 @@ function App() {
     `${apiBaseUrl}/discover/tv?/&language=en-US&page=${page}&sort_by=popularity.desc`,
     `${apiBaseUrl}/person/popular?language=en-US&page=${page}`,
     `${apiBaseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`,
+    `${apiBaseUrl}/movie/movie_id?language=en-US`
   ];
 
   //prevent too many requests from the api
@@ -49,8 +56,6 @@ function App() {
     Authorization: `Bearer ${apiKey}`
   }
 };
-
-
 
 
  const getMovies = async (debouncedSearch : string, topicQuery : string) => {
@@ -101,7 +106,30 @@ function App() {
   useEffect(() => {
     getMovies(debouncedSearch, topicQuery);
 }, [debouncedSearch, page, topicQuery]);
-  
+
+
+const getMovieDetails = async (movieId: number): Promise<void> => {
+  setIsLoading(true);
+  setErrorMessage('');
+
+  try {
+    const endpoint = `${apiBaseUrl}/movie/${movieId}?language=en-US`;
+    const response = await fetch(endpoint, options);
+
+    if (!response.ok) throw new Error('Failed to fetch movie details');
+
+    const data: MovieDetails = await response.json();
+    setSelectedMovie(data);
+    setShowModal(true);
+  } catch (error) {
+    console.error('Error fetching movie details:', error);
+    setErrorMessage('Could not load movie details.');
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
   return (
     <>
       <div>
@@ -135,15 +163,18 @@ function App() {
   <div>
     {isLoading? (<p>Loading....</p>) : 
     errorMessage? ( <p> {errorMessage}</p>) :
-    <Moviecard movies={movies} topicQuery={topicQuery} />
-    }
-    
+  <Moviecard movies={movies} topicQuery={topicQuery}  onMovieClick={(id: number) => getMovieDetails(id)}/>
+}
     <Button page={page} setPage={setPage} totalPages={totalPages}/>
   </div>
 
+  {showModal && selectedMovie && (
+  <MovieModal movie={selectedMovie} onClose={() => setShowModal(false)} />
+)}
      </div>
      </>
   )
 }
+
 
 export default App
