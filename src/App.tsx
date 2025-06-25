@@ -164,7 +164,15 @@ const getMovieDetails = async (movieId: number): Promise<void> => {
   <div>
     {isLoading? (<p>Loading....</p>) : 
     errorMessage? ( <p> {errorMessage}</p>) :
-  <Moviecard movies={movies} topicQuery={topicQuery}  onMovieClick={(id: number) => getMovieDetails(id)}/>
+  <Moviecard 
+  movies={movies} 
+  topicQuery={topicQuery}  
+  onMovieClick={(id: number) => {
+    if (topicQuery !== 'People') {
+      getMovieDetails(id);
+    }
+  }}
+/>
 }
     <Button page={page} setPage={setPage} totalPages={totalPages}/>
   </div>
