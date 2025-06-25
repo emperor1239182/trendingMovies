@@ -1,6 +1,6 @@
 export interface MovieDetails {
   id: number;
-  title: string;// components/MovieModal.tsx
+  title: string;
   overview: string;
   poster_path: string;
   backdrop_path: string;

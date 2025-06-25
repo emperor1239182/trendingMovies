@@ -62,7 +62,6 @@ export const Moviecard = ({ movies, topicQuery, onMovieClick}: MoviecardProps) =
 }
 
             <h3 className="text-[#5db4fb] text-[12px] font-bold">{movie.title ? movie.title : movie.name}</h3>
-            <p className="hidden">{movie.overview}</p>
             </div>
           </li>
         ))}

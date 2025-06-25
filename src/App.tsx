@@ -23,7 +23,7 @@ function App() {
   const [isModal, setIsModal] = useState(false);
   const [topicQuery, setTopicQuery] = useState('');
   const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
-const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
 
 
@@ -35,14 +35,13 @@ const [showModal, setShowModal] = useState(false);
     `${apiBaseUrl}/trending/movie/day?language=en-US&page=${page}&sort_by=created_at.asc`,
     `${apiBaseUrl}/discover/tv?/&language=en-US&page=${page}&sort_by=popularity.desc`,
     `${apiBaseUrl}/person/popular?language=en-US&page=${page}`,
-    `${apiBaseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`,
-    `${apiBaseUrl}/movie/movie_id?language=en-US`
+    `${apiBaseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`
   ];
 
   //prevent too many requests from the api
   useDebounce(()=> setDebouncedSearch(search), 1000, [search]);
 
-  const topics: string[] = ['Trending', 'TVShows', 'People']
+  const topics: string[] = ['Movies', 'Trending', 'TVShows', 'People']
 
   type param = {
     method: string;
@@ -67,7 +66,9 @@ const [showModal, setShowModal] = useState(false);
 
   if (debouncedSearch) {
     endPoint = queries[0];
-  } else if (topicQuery === 'Trending') {
+  }  else if (topicQuery === 'Movies'){
+    endPoint =  queries[4];
+  }else if (topicQuery === 'Trending') {
     endPoint = queries[1];
   } else if (topicQuery === 'TVShows') {
     endPoint = queries[2];
