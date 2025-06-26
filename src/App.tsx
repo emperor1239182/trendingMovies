@@ -7,7 +7,7 @@ import { Button } from './button';
 import { Moviecard } from './moviecard';
 import type { MovieDetails } from './types'; 
 import { MovieModal } from './movieDetails';
-
+import { Footer } from './footer';
 
 
 
@@ -162,18 +162,21 @@ const getMovieDetails = async (movieId: number): Promise<void> => {
   </header>
 
   <div>
-    {isLoading? (<p>Loading....</p>) : 
-    errorMessage? ( <p> {errorMessage}</p>) :
+{isLoading ? (
+  <p>Loading...</p>
+) : errorMessage ? (
+  <p>{errorMessage}</p>
+) : (
   <Moviecard 
-  movies={movies} 
-  topicQuery={topicQuery}  
-  onMovieClick={(id: number) => {
-    if (topicQuery !== 'People') {
-      getMovieDetails(id);
-    }
-  }}
-/>
-}
+    movies={movies} 
+    topicQuery={topicQuery}  
+    onMovieClick={(id: number) => {
+      if (topicQuery !== 'People') {
+        getMovieDetails(id);
+      }
+    }}
+  />
+)}
     <Button page={page} setPage={setPage} totalPages={totalPages}/>
   </div>
 
@@ -181,6 +184,8 @@ const getMovieDetails = async (movieId: number): Promise<void> => {
   <MovieModal movie={selectedMovie} onClose={() => setShowModal(false)} />
 )}
      </div>
+
+     <Footer/>
      </>
   )
 }
