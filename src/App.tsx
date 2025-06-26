@@ -7,7 +7,6 @@ import { Button } from './button';
 import { Moviecard } from './moviecard';
 import type { MovieDetails } from './types'; 
 import { MovieModal } from './movieDetails';
-import { Footer } from './footer';
 
 
 
@@ -184,8 +183,6 @@ const getMovieDetails = async (movieId: number): Promise<void> => {
   <MovieModal movie={selectedMovie} onClose={() => setShowModal(false)} />
 )}
      </div>
-
-     <Footer/>
      </>
   )
 }
