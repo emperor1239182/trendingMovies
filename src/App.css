@@ -27,7 +27,7 @@ body {
 
 @layer components {
   .header{
-    @apply flex flex-col justify-center items-center mx-20 my-30
+    @apply flex flex-col justify-center items-center my-30
   }
   .search{
     @apply flex justify-center items-center flex-row-reverse bg-blue-950 p-4 gap-3 rounded-4xl
@@ -46,7 +46,7 @@ body {
 
 @layer base{
   .intro{
-  @apply text-[30px] text-center text-pink-300
+  @apply text-[30px] text-center text-pink-300 
   }
   input{
   @apply border-none focus:outline-none w-60 md:w-2xl lg:w-4xl text-amber-100
