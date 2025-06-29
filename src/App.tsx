@@ -155,7 +155,7 @@ const getMovieDetails = async (movieId: number): Promise<void> => {
         </section>
 
         <header className='header'>
-          <img src='/banner2.png' alt='banner' className="w-full max-h-[70vh] object-fit" />
+          <img src='/banner2.png' alt='banner' className="w-auto object-fit h-[60vh]" />
         <h1 className='intro'>Discover New <span className='tag'>Movies</span> You Love Without The Hassle</h1>
         <Search search={search} setSearch={setSearch} setTopicQuery={setTopicQuery}/>
   </header>
